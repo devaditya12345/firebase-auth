@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import InputControl from "../InputControl/InputControl";
@@ -9,7 +10,7 @@ import styles from "./Signup.module.css";
 
 function Signup(props) {
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -17,6 +18,7 @@ function Signup(props) {
   });
   const [errorMsg, setErrorMsg] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+  const [msg, setMsg] = useState("");
 
   const handleSubmission = () => {
     if (!values.name || !values.email || !values.pass) {
@@ -33,7 +35,10 @@ function Signup(props) {
         await updateProfile(user, {
           displayName: values.name,
         });
-        navigate("/signup");
+        // navigate("/");
+        setMsg(<h4> SignUp Successful !!! </h4>)
+
+        
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);
@@ -70,6 +75,7 @@ function Signup(props) {
 
         <div className={styles.footer}>
           <b className={styles.error}>{errorMsg}</b>
+          <b className={styles.error}>{msg}</b>
           <button onClick={handleSubmission} disabled={submitButtonDisabled}>
             Signup
           </button>
